@@ -4,7 +4,20 @@ matplotlib.use('Agg')  # Use non-interactive backend for production
 import matplotlib.pyplot as plt
 import seaborn as sns
 from wordcloud import WordCloud
-from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
+
+# Try to import transformers, fall back gracefully if not available
+TRANSFORMERS_AVAILABLE = False
+pipeline = None
+AutoTokenizer = None
+AutoModelForSequenceClassification = None
+
+try:
+    from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
+    TRANSFORMERS_AVAILABLE = True
+except (ImportError, OSError) as e:
+    print(f"⚠️ Transformers not available: {e}")
+    print("📝 Using VADER sentiment analysis only")
+
 try:
     from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 except ImportError:
@@ -42,6 +55,9 @@ ensure_nltk_data()
 @st.cache_resource
 def load_sentiment_model():
     """Load the pretrained sentiment analysis model"""
+    if not TRANSFORMERS_AVAILABLE:
+        return None
+    
     try:
         return pipeline("sentiment-analysis", 
                        model="distilbert-base-uncased-finetuned-sst-2-english",
@@ -71,6 +87,10 @@ def analyze_sentiment(text, method="transformers"):
         tuple: (sentiment, confidence/score)
     """
     if method == "transformers":
+        if not TRANSFORMERS_AVAILABLE:
+            # Fall back to VADER if transformers not available
+            return analyze_sentiment(text, method="vader")
+            
         model = load_sentiment_model()
         if not model:
             return "ERROR", 0.0

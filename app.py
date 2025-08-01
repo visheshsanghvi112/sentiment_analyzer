@@ -26,26 +26,19 @@ TextProcessor = None
 MovieRecommender = None
 ADVANCED_FEATURES = False
 
-# Try to import advanced modules, fall back to basic ones
+# Import basic modules (advanced modules were removed)
 def import_modules():
     global MovieSearchEngine, EmbeddingEngine, TextProcessor, MovieRecommender, ADVANCED_FEATURES
     
     try:
-        from search_utils import MovieSearchEngine, EmbeddingEngine, TextProcessor
-        from recommender import MovieRecommender
-        ADVANCED_FEATURES = True
-        st.success("✅ Advanced features (BERT embeddings) available")
+        from search_utils_basic import MovieSearchEngine, TFIDFEmbeddingEngine as EmbeddingEngine, TextProcessor
+        from recommender_basic import MovieRecommender
+        ADVANCED_FEATURES = False
+        st.success("✅ TF-IDF features loaded successfully")
         return True
     except ImportError as e:
-        st.warning("⚠️ Advanced features not available, using basic TF-IDF features")
-        try:
-            from search_utils_basic import MovieSearchEngine, TFIDFEmbeddingEngine as EmbeddingEngine, TextProcessor
-            from recommender_basic import MovieRecommender
-            ADVANCED_FEATURES = False
-            return True
-        except ImportError as e2:
-            st.error(f"❌ Error importing basic modules: {e2}")
-            return False
+        st.error(f"❌ Error importing modules: {e}")
+        return False
 
 # Load dataset with caching for better performance
 @st.cache_data
@@ -132,8 +125,7 @@ def main():
     """, unsafe_allow_html=True)
 
     # Show feature status
-    if not ADVANCED_FEATURES:
-        st.info("ℹ️ Running in basic mode with TF-IDF embeddings. For BERT embeddings, install transformers and torch.")
+    st.success("ℹ️ Running with TF-IDF embeddings for fast and reliable recommendations.")
 
     # Sidebar
     st.sidebar.title("🎬 Navigation")

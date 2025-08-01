@@ -51,7 +51,7 @@ A comprehensive Streamlit web application for intelligent movie sentiment analys
 
 4. **Run the enhanced app**:
    ```bash
-   streamlit run app_enhanced_working.py
+   streamlit run app.py
    ```
 
 ## 🎯 Usage
@@ -84,7 +84,7 @@ A comprehensive Streamlit web application for intelligent movie sentiment analys
 ## 🛠️ Technical Architecture
 
 ### Core Components
-- **`app_enhanced_working.py`**: Main application with fallback mechanism
+- **`app.py`**: Main application with fallback mechanism
 - **`search_utils_basic.py`**: TF-IDF based search engine
 - **`recommender_basic.py`**: Content-based recommendation system
 - **`sentiment_utils.py`**: Sentiment analysis with graceful fallback
@@ -105,15 +105,15 @@ A comprehensive Streamlit web application for intelligent movie sentiment analys
 ## 📁 Project Structure
 
 ```
-├── app_enhanced_working.py    # Main enhanced application
-├── search_utils_basic.py      # TF-IDF search engine
-├── recommender_basic.py       # Movie recommendation system
-├── sentiment_utils.py         # Sentiment analysis utilities
-├── gemini_api.py             # Gemini AI integration
-├── requirements.txt           # Python dependencies
+├── app.py                    # Main enhanced application
+├── search_utils_basic.py     # TF-IDF search engine
+├── recommender_basic.py      # Movie recommendation system
+├── sentiment_utils.py        # Sentiment analysis utilities
+├── gemini_api.py            # Gemini AI integration
+├── requirements.txt          # Python dependencies
 ├── .streamlit/
-│   └── secrets.toml.example  # API key configuration
-└── README.md                 # This file
+│   └── secrets.toml.example # API key configuration
+└── README.md                # This file
 ```
 
 ## 🔧 Configuration
@@ -143,7 +143,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 pip install -r requirements.txt
 
 # Run the enhanced app
-streamlit run app_enhanced_working.py
+streamlit run app.py
 ```
 
 ## 📊 Performance Metrics

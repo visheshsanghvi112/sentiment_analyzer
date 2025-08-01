@@ -18,7 +18,7 @@ def configure_gemini():
             return None
     
     genai.configure(api_key=api_key)
-    return genai.GenerativeModel('gemini-pro')
+    return genai.GenerativeModel('gemini-2.5-pro')
 
 def get_gemini_insight(question, context="movie reviews"):
     """

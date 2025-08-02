@@ -5,6 +5,13 @@ import traceback
 import time
 from typing import List, Dict, Tuple, Optional
 
+# Set page config FIRST - before any other st commands
+st.set_page_config(
+    page_title="🎬 AI Movie Sentiment Analyzer", 
+    layout="wide",
+    page_icon="🎬"
+)
+
 # Try to import datasets with comprehensive error handling
 DATASETS_AVAILABLE = False
 load_dataset = None
@@ -12,12 +19,12 @@ load_dataset = None
 try:
     from datasets import load_dataset
     DATASETS_AVAILABLE = True
-    st.success("✅ Datasets library loaded successfully")
+    print("✅ Datasets library loaded successfully")
 except ImportError as e:
-    st.warning("⚠️ Datasets library not available. Using fallback data.")
+    print("⚠️ Datasets library not available. Using fallback data.")
     DATASETS_AVAILABLE = False
 except Exception as e:
-    st.warning(f"⚠️ Datasets library error: {e}. Using fallback data.")
+    print(f"⚠️ Datasets library error: {e}. Using fallback data.")
     DATASETS_AVAILABLE = False
 
 # Import custom modules with error handling
@@ -39,6 +46,12 @@ EmbeddingEngine = None
 TextProcessor = None
 MovieRecommender = None
 ADVANCED_FEATURES = False
+
+# Global variables for the app
+df = None
+search_engine = None
+recommender = None
+text_processor = None
 
 # Import basic modules (advanced modules were removed)
 def import_modules():
@@ -143,11 +156,6 @@ def initialize_app():
         return False
 
 def main():
-    st.set_page_config(
-        page_title="🎬 AI Movie Sentiment Analyzer", 
-        layout="wide",
-        page_icon="🎬"
-    )
     
     # Initialize the app
     if not initialize_app():

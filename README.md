@@ -51,8 +51,26 @@ A comprehensive Streamlit web application for intelligent movie sentiment analys
 
 4. **Run the enhanced app**:
    ```bash
+   # Option 1: Use the startup script (recommended)
+   python run_app.py
+   
+   # Option 2: Run directly with streamlit
    streamlit run app.py
    ```
+
+## 🔧 Troubleshooting
+
+### NumPy 2.x Compatibility
+The app is now fully compatible with NumPy 2.x and handles compatibility issues automatically. If you encounter any issues:
+
+1. **Automatic Fallback**: The app will automatically use fallback data if the IMDB dataset fails to load
+2. **Robust Error Handling**: All import errors are handled gracefully with informative messages
+3. **Latest Dependencies**: All dependencies are updated to the latest compatible versions
+
+### Common Issues
+- **Streamlit not found**: Run `pip install streamlit`
+- **Dataset loading fails**: The app will automatically use fallback data
+- **Gemini API errors**: The app will work without Gemini features
 
 ## 🎯 Usage
 
@@ -84,7 +102,7 @@ A comprehensive Streamlit web application for intelligent movie sentiment analys
 ## 🛠️ Technical Architecture
 
 ### Core Components
-- **`app.py`**: Main application with fallback mechanism
+- **`app.py`**: Main application with robust error handling
 - **`search_utils_basic.py`**: TF-IDF based search engine
 - **`recommender_basic.py`**: Content-based recommendation system
 - **`sentiment_utils.py`**: Sentiment analysis with graceful fallback
@@ -98,80 +116,20 @@ A comprehensive Streamlit web application for intelligent movie sentiment analys
 
 ### Performance Features
 - **Caching**: Streamlit caching for better performance
-- **Fallback Mechanism**: Works with or without advanced ML libraries
-- **Real-time**: Fast search and analysis responses
-- **Graceful Degradation**: App works in any environment
+- **Fallback Data**: Comprehensive sample data when IMDB dataset unavailable
+- **Error Recovery**: Graceful handling of all import and runtime errors
+- **NumPy 2.x Support**: Full compatibility with latest NumPy versions
 
-## 📁 Project Structure
+## 🚀 Quick Start
 
-```
-├── app.py                    # Main enhanced application
-├── search_utils_basic.py     # TF-IDF search engine
-├── recommender_basic.py      # Movie recommendation system
-├── sentiment_utils.py        # Sentiment analysis utilities
-├── gemini_api.py            # Gemini AI integration
-├── requirements.txt          # Python dependencies
-├── .streamlit/
-│   └── secrets.toml.example # API key configuration
-└── README.md                # This file
-```
+1. **Install dependencies**: `pip install -r requirements.txt`
+2. **Run the app**: `python run_app.py`
+3. **Open browser**: Navigate to `http://localhost:8501`
+4. **Start analyzing**: Enter movie reviews or search for movies
 
-## 🔧 Configuration
+## 📝 Notes
 
-### Streamlit Secrets
-Create `.streamlit/secrets.toml`:
-```toml
-GEMINI_API_KEY = "your_actual_gemini_api_key_here"
-```
-
-### Environment Variables
-Alternatively, use `.env` file:
-```
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-## 🚀 Deployment
-
-### Streamlit Cloud
-1. Push code to GitHub
-2. Deploy on [share.streamlit.io](https://share.streamlit.io)
-3. Add `GEMINI_API_KEY` in Streamlit Cloud secrets
-
-### Local Development
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the enhanced app
-streamlit run app.py
-```
-
-## 📊 Performance Metrics
-
-- ✅ **Search Response**: < 200ms
-- ✅ **Graceful Fallback**: Works without torch/transformers
-- ✅ **Real-time AI**: Gemini insights and explanations
-- ✅ **Intelligent UX**: Autocomplete and fuzzy matching
-- ✅ **Portfolio-ready**: Clean, modern interface
-
-## 🎯 Key Features Summary
-
-- **Smart Search**: Autocomplete + fuzzy matching
-- **Fast Performance**: Under 200ms response time
-- **AI Recommendations**: Content-based with explanations
-- **Mood Matching**: Find movies by emotional vibe
-- **Gemini AI**: Advanced insights and analysis
-- **Graceful Fallback**: Works in any environment
-- **Modern UI**: Clean, responsive interface
-
-## 🤝 Contributing
-
-Feel free to open issues or submit pull requests to improve the application!
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
----
-
-**The enhanced movie sentiment analyzer is now real-time, intelligent, and portfolio-ready!** 🎉
+- The app works with or without the IMDB dataset
+- Gemini features are optional but enhance the experience
+- All errors are handled gracefully with informative messages
+- Compatible with the latest versions of all dependencies

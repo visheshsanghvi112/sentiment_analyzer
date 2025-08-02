@@ -1,10 +1,24 @@
-from datasets import load_dataset
 import pandas as pd
 import streamlit as st
 import sys
 import traceback
 import time
 from typing import List, Dict, Tuple, Optional
+
+# Try to import datasets with comprehensive error handling
+DATASETS_AVAILABLE = False
+load_dataset = None
+
+try:
+    from datasets import load_dataset
+    DATASETS_AVAILABLE = True
+    st.success("✅ Datasets library loaded successfully")
+except ImportError as e:
+    st.warning("⚠️ Datasets library not available. Using fallback data.")
+    DATASETS_AVAILABLE = False
+except Exception as e:
+    st.warning(f"⚠️ Datasets library error: {e}. Using fallback data.")
+    DATASETS_AVAILABLE = False
 
 # Import custom modules with error handling
 try:
@@ -40,18 +54,69 @@ def import_modules():
         st.error(f"❌ Error importing modules: {e}")
         return False
 
+def create_fallback_dataset():
+    """Create a comprehensive fallback dataset when IMDB dataset is not available"""
+    st.info("📝 Creating comprehensive fallback dataset with sample movie reviews...")
+    
+    # Extended sample movie reviews for better demonstration
+    sample_reviews = [
+        # Positive reviews
+        {"text": "This movie was absolutely fantastic! The acting was superb and the plot was engaging.", "label": 1},
+        {"text": "I loved this film. The cinematography was beautiful and the story was compelling.", "label": 1},
+        {"text": "Amazing movie! The characters were well-developed and the dialogue was witty.", "label": 1},
+        {"text": "This was a great film with excellent performances from all actors.", "label": 1},
+        {"text": "Wonderful movie experience. The soundtrack was perfect and the pacing was excellent.", "label": 1},
+        {"text": "Incredible storytelling and amazing visual effects. Highly recommended!", "label": 1},
+        {"text": "The best movie I've seen this year. Outstanding direction and acting.", "label": 1},
+        {"text": "A masterpiece of modern cinema. Every scene was perfectly crafted.", "label": 1},
+        {"text": "Brilliant film with outstanding performances and a compelling narrative.", "label": 1},
+        {"text": "Absolutely loved it! The plot twists were unexpected and the ending was satisfying.", "label": 1},
+        
+        # Negative reviews
+        {"text": "This movie was terrible. The acting was wooden and the plot made no sense.", "label": 0},
+        {"text": "I hated this film. It was boring and the characters were unlikeable.", "label": 0},
+        {"text": "Poor movie with bad writing and weak performances.", "label": 0},
+        {"text": "This was a waste of time. The story was confusing and the ending was unsatisfying.", "label": 0},
+        {"text": "Disappointing film with poor direction and weak script.", "label": 0},
+        {"text": "The movie was okay. Some parts were good but others were boring.", "label": 0},
+        {"text": "Average film with nothing special to offer.", "label": 0},
+        {"text": "This movie had potential but failed to deliver.", "label": 0},
+        {"text": "Mixed feelings about this one. Some good moments but overall mediocre.", "label": 0},
+        {"text": "Not the worst movie I've seen, but definitely not great either.", "label": 0},
+        
+        # Neutral/Mixed reviews
+        {"text": "The movie had some good moments but was overall forgettable.", "label": 0},
+        {"text": "Decent film but nothing groundbreaking. Worth a watch if you're bored.", "label": 0},
+        {"text": "The acting was good but the story was predictable and cliché.", "label": 0},
+        {"text": "Some scenes were impressive but the overall plot was weak.", "label": 0},
+        {"text": "The cinematography was beautiful but the story lacked depth.", "label": 0},
+    ]
+    
+    return pd.DataFrame(sample_reviews)
+
 # Load dataset with caching for better performance
 @st.cache_data
 def load_imdb_data():
-    """Load and cache the IMDB dataset"""
+    """Load and cache the IMDB dataset with robust fallback"""
     try:
-        with st.spinner("🔄 Loading IMDB dataset (this may take a moment on first run)..."):
-            dataset = load_dataset("imdb")
-            return pd.DataFrame(dataset["train"])
+        if DATASETS_AVAILABLE and load_dataset:
+            with st.spinner("🔄 Loading IMDB dataset (this may take a moment on first run)..."):
+                try:
+                    dataset = load_dataset("imdb")
+                    df = pd.DataFrame(dataset["train"])
+                    st.success(f"✅ IMDB dataset loaded successfully with {len(df)} reviews")
+                    return df
+                except Exception as e:
+                    st.warning(f"⚠️ Error loading IMDB dataset: {e}")
+                    st.info("💡 Using fallback dataset instead.")
+                    return create_fallback_dataset()
+        else:
+            st.info("📝 Using fallback dataset (datasets library not available)")
+            return create_fallback_dataset()
     except Exception as e:
-        st.error(f"❌ Error loading dataset: {e}")
-        st.info("💡 This might be due to network issues. Please refresh the page or try again later.")
-        return pd.DataFrame()
+        st.warning(f"⚠️ Unexpected error loading dataset: {e}")
+        st.info("💡 Using fallback dataset instead.")
+        return create_fallback_dataset()
 
 # Initialize dataset and engines
 def initialize_app():
@@ -63,12 +128,18 @@ def initialize_app():
     
     try:
         df = load_imdb_data()
+        if df.empty:
+            st.error("❌ Could not load any dataset")
+            return False
+        
+        st.success(f"✅ Dataset loaded with {len(df)} reviews")
         search_engine = MovieSearchEngine(df)
         recommender = MovieRecommender(df)
         text_processor = TextProcessor()
         return True
     except Exception as e:
         st.error(f"❌ Critical error: {e}")
+        st.info("💡 Please check the console for more details.")
         return False
 
 def main():

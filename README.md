@@ -1,135 +1,117 @@
-# 🎬 AI Movie Sentiment Analyzer
+# 🎬 IMDB Movie Sentiment Analyzer
 
-A comprehensive Streamlit web application for intelligent movie sentiment analysis with AI-powered recommendations and insights.
+A simple, clean Streamlit web application for analyzing movie review sentiment using machine learning.
 
-## 🚀 Enhanced Features
+## 📁 Project Structure
 
-### 🔍 Smart Movie Search
-- **Autocomplete**: Intelligent movie name suggestions as you type
-- **Fuzzy Matching**: Handles typos like "tightanic" → "Titanic"
-- **Fast Response**: Search results in under 200ms
+```
+sentiment_analyzer/
+├── 📱 Core Application
+│   ├── app.py                    # Main Streamlit application
+│   ├── run_app.py               # Application launcher
+│   └── config.py                # Simple configuration
+│
+├── 🧠 ML Components
+│   ├── sentiment_utils.py       # Sentiment analysis logic
+│   └── utils.py                 # Helper utilities
+│
+├── 🔧 Setup
+│   ├── logger_config.py         # Logging setup
+│   ├── requirements.txt         # Dependencies
+│   └── README.md               # This file
+│
+└── 📂 Data
+    └── logs/                   # Application logs
+```
 
-### 🎯 Movie Recommendations
-- **Content-Based**: Find similar movies using TF-IDF embeddings
-- **Review-Based**: Get recommendations based on your review text
-- **AI Explanations**: Gemini explains why movies are recommended
+## 🚀 Features
 
-### 💭 Mood-Based Search
-- **Emotional Matching**: Find movies that match your mood
-- **Vibe Search**: Enter feelings like "feel-good", "dark", "romantic"
-- **AI Analysis**: Get insights on mood-based recommendations
+- **Simple Interface**: Clean, easy-to-use Streamlit interface
+- **IMDB Dataset**: Uses real IMDB movie review data (up to 500 reviews)
+- **Pre-trained Models**: Leverages DistilBERT for sentiment analysis
+- **Real-time Analysis**: Analyze custom text or sample data
+- **Accuracy Metrics**: Test on 250+ reviews for reliable results
+- **Configurable Sample Size**: Choose 50-500 reviews for testing
 
-### 🤖 AI Insights
-- **Gemini Integration**: Advanced AI analysis and explanations
-- **Review Patterns**: Discover common patterns in movie reviews
-- **Emotional Analysis**: Deep insights into movie emotions
+## 🛠️ Installation
 
-### 📊 Advanced Analytics
-- **Sentiment Distribution**: Visual charts of positive/negative reviews
-- **Word Clouds**: Visual representation of review content
-- **Top Reviews**: Display best positive and negative reviews
-
-## 📦 Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/visheshsanghvi112/sentiment_analyzer.git
-   cd sentiment_analyzer
-   ```
-
+1. **Clone or download** this repository
 2. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
-
-3. **Set up Gemini API** (recommended for full features):
-   - Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create `.streamlit/secrets.toml` with:
-     ```toml
-     GEMINI_API_KEY = "your_actual_gemini_api_key_here"
-     ```
-
-4. **Run the enhanced app**:
+3. **Run the app**:
    ```bash
-   # Option 1: Use the startup script (recommended)
    python run_app.py
-   
-   # Option 2: Run directly with streamlit
-   streamlit run app.py
    ```
+4. **Open browser**: Navigate to `http://localhost:8501`
+
+## 📖 Usage
+
+### Analyze Custom Text
+1. Go to the "📝 Analyze Text" tab
+2. Enter or paste a movie review
+3. Click "🔍 Analyze" to get sentiment prediction
+
+### Test with Sample Data
+1. Go to the "📊 Sample Data" tab  
+2. Click "🔍 Analyze Sample Reviews"
+3. See accuracy metrics and detailed results
+
+## 🔧 Technical Details
+
+- **Model**: DistilBERT (fine-tuned for sentiment analysis)
+- **Dataset**: IMDB movie reviews
+- **Framework**: Streamlit + Transformers + PyTorch
+- **Sentiments**: Positive, Negative, Neutral
+
+## 📊 What You Get
+
+- **Sentiment Prediction**: Positive/Negative classification
+- **Confidence Score**: How certain the model is
+- **Accuracy Metrics**: Performance on sample data
+- **Clean Interface**: No clutter, just results
+
+## 🚨 Requirements
+
+- Python 3.8+
+- Internet connection (for downloading models)
+- ~2GB disk space (for model cache)
 
 ## 🔧 Troubleshooting
 
-### NumPy 2.x Compatibility
-The app is now fully compatible with NumPy 2.x and handles compatibility issues automatically. If you encounter any issues:
+### JavaScript/Browser Issues
+If you see `TypeError: Failed to fetch dynamically imported module` errors:
 
-1. **Automatic Fallback**: The app will automatically use fallback data if the IMDB dataset fails to load
-2. **Robust Error Handling**: All import errors are handled gracefully with informative messages
-3. **Latest Dependencies**: All dependencies are updated to the latest compatible versions
+1. **Clear browser cache** (Ctrl+Shift+Delete)
+2. **Try incognito/private mode** (Ctrl+Shift+N)
+3. **Try a different browser** (Chrome, Firefox, Edge)
+4. **Restart browser completely**
+5. **Try different launch methods:**
+   ```bash
+   # Standard launcher
+   python run_app.py
+   
+   # Direct launcher
+   python run_direct.py
+   
+   # Manual Streamlit
+   streamlit run app.py
+   
+   # Different port
+   streamlit run app.py --server.port 8502
+   ```
 
-### Common Issues
-- **Streamlit not found**: Run `pip install streamlit`
-- **Dataset loading fails**: The app will automatically use fallback data
-- **Gemini API errors**: The app will work without Gemini features
+### Test Browser Compatibility
+Open `test_browser.html` in your browser to check JavaScript compatibility.
 
-## 🎯 Usage
+## 🎯 Perfect For
 
-### 🔍 Smart Movie Search
-- Type movie names with intelligent autocomplete
-- Use fuzzy search for typos and partial matches
-- Get comprehensive movie analysis with reviews and sentiment
+- Learning sentiment analysis
+- Testing movie review classification
+- Understanding ML model predictions
+- Simple sentiment analysis tasks
 
-### 🎯 Movie Recommendations
-- **Based on Movie**: Find similar movies to ones you like
-- **Based on Review**: Get recommendations from your review text
-- **Movie Clusters**: Discover movies grouped by themes
+---
 
-### 💭 Mood-Based Search
-- Describe your mood or desired feeling
-- Get movies that match your emotional state
-- Receive AI analysis of why movies match your mood
-
-### 📊 Review Analysis
-- Analyze your own movie reviews
-- Get sentiment scores with confidence levels
-- Detect emotions and get AI explanations
-
-### 🤖 AI Insights
-- Ask Gemini questions about movie reviews
-- Get explanations for sentiment predictions
-- Discover patterns in movie preferences
-
-## 🛠️ Technical Architecture
-
-### Core Components
-- **`app.py`**: Main application with robust error handling
-- **`search_utils_basic.py`**: TF-IDF based search engine
-- **`recommender_basic.py`**: Content-based recommendation system
-- **`sentiment_utils.py`**: Sentiment analysis with graceful fallback
-- **`gemini_api.py`**: Gemini AI integration
-
-### AI/ML Technologies
-- **TF-IDF Embeddings**: For movie similarity and recommendations
-- **VADER Sentiment**: Traditional sentiment analysis
-- **RapidFuzz**: Fast fuzzy string matching
-- **Gemini AI**: Advanced AI insights and explanations
-
-### Performance Features
-- **Caching**: Streamlit caching for better performance
-- **Fallback Data**: Comprehensive sample data when IMDB dataset unavailable
-- **Error Recovery**: Graceful handling of all import and runtime errors
-- **NumPy 2.x Support**: Full compatibility with latest NumPy versions
-
-## 🚀 Quick Start
-
-1. **Install dependencies**: `pip install -r requirements.txt`
-2. **Run the app**: `python run_app.py`
-3. **Open browser**: Navigate to `http://localhost:8501`
-4. **Start analyzing**: Enter movie reviews or search for movies
-
-## 📝 Notes
-
-- The app works with or without the IMDB dataset
-- Gemini features are optional but enhance the experience
-- All errors are handled gracefully with informative messages
-- Compatible with the latest versions of all dependencies
+**That's it!** A clean, simple sentiment analyzer focused on doing one thing well. 🎬

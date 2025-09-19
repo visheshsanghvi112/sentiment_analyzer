@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Streamlit Test</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>🎬 IMDB Sentiment Analyzer</h1>
+    <p>If you're seeing JavaScript errors with Streamlit, try these solutions:</p>
+    
+    <h2>🔧 Quick Fixes:</h2>
+    <ol>
+        <li><strong>Clear Browser Cache:</strong>
+            <ul>
+                <li>Chrome: Ctrl+Shift+Delete → Clear browsing data</li>
+                <li>Firefox: Ctrl+Shift+Delete → Clear recent history</li>
+                <li>Edge: Ctrl+Shift+Delete → Clear browsing data</li>
+            </ul>
+        </li>
+        <li><strong>Try Incognito/Private Mode:</strong>
+            <ul>
+                <li>Chrome: Ctrl+Shift+N</li>
+                <li>Firefox: Ctrl+Shift+P</li>
+                <li>Edge: Ctrl+Shift+N</li>
+            </ul>
+        </li>
+        <li><strong>Try Different Browser:</strong>
+            <ul>
+                <li>Chrome, Firefox, Edge all work well with Streamlit</li>
+            </ul>
+        </li>
+        <li><strong>Restart Browser Completely</strong></li>
+    </ol>
+    
+    <h2>🚀 Launch Options:</h2>
+    <p>Try these different ways to start the app:</p>
+    <pre>
+# Option 1: Standard launcher
+python run_app.py
+
+# Option 2: Direct launcher  
+python run_direct.py
+
+# Option 3: Manual Streamlit
+streamlit run app.py
+
+# Option 4: Different port
+streamlit run app.py --server.port 8502
+    </pre>
+    
+    <h2>📱 Access the App:</h2>
+    <p><a href="http://localhost:8501" target="_blank">http://localhost:8501</a></p>
+    <p><a href="http://localhost:8502" target="_blank">http://localhost:8502</a> (alternative port)</p>
+    
+    <script>
+        // Test if JavaScript is working
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ JavaScript is working in this browser');
+            
+            // Add a success message
+            const body = document.body;
+            const successDiv = document.createElement('div');
+            successDiv.style.cssText = 'background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; margin: 10px 0; border-radius: 5px;';
+            successDiv.innerHTML = '✅ JavaScript is working in this browser - Streamlit should work too!';
+            body.appendChild(successDiv);
+        });
+    </script>
+</body>
+</html>

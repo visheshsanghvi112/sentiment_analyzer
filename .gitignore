@@ -1,20 +1,15 @@
 # Environment files
 .env
-*.env
-!.env.example
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-*.so
 
 # Virtual environments
 venv/
 env/
-ENV/
 
 # IDE files
 .vscode/
@@ -24,12 +19,15 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Streamlit cache
-.streamlit/secrets.toml
-
 # Logs
+logs/
 *.log
 
-# Temporary files
-*.tmp
-*.temp
+# Cache directories
+.cache/
+.dataset_cache/
+.model_cache/
+
+# Model files
+*.bin
+*.safetensors
